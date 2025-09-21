@@ -9,6 +9,8 @@ import { toast } from 'react-toastify'
 import { ClipLoader } from "react-spinners"
 import { useDispatch } from 'react-redux'
 import { setUserData } from '../redux/useSlice'
+import { signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../../utils/firebase'
 
 const SignUp = () => {
   const [show, setShow] = useState(false) 
@@ -30,6 +32,23 @@ const SignUp = () => {
       toast.success("Signup Successful")
     } catch (error) {
       setLoading(false)
+      console.log(error)
+      toast.error(error.response.data.message)
+    }
+  }
+
+  const googleSignUp = async () => {
+    try {
+      const response = await signInWithPopup(auth, provider)
+      let user = response.user
+      let name = user.displayName
+      let email = user.email
+
+      const result = await axios.post(serverUrl + "/api/auth/googleauth", {name, email, role}, {withCredentials:true})
+      dispatch(setUserData(result.data))
+      navigate("/")
+      toast.success("Signup Successful")
+    } catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
     }
@@ -69,7 +88,7 @@ const SignUp = () => {
             <div className='w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center'>or continue</div>
             <div className='w-[25%] h-[0.5px] bg-[#c4c4c4]'></div>
           </div>
-          <div className='w-[80%] h-[40px] border-1 border-black rounded-[5px] flex items-center justify-center cursor-pointer'>
+          <div className='w-[80%] h-[40px] border-1 border-black rounded-[5px] flex items-center justify-center cursor-pointer' onClick={googleSignUp}>
             <img src={google} className='w-[25px]' alt="" />
             <span className='text-[18px] text-gray-500'>oogle</span>
           </div>
