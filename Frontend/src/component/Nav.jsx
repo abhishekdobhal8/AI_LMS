@@ -48,7 +48,7 @@ function Nav() {
               onClick={() => setShow((prev) => !prev)}
             />
           )}
-          {userData && (
+          {userData?.photoUrl ? <img src={userData?.photoUrl} className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer" onClick={() => setShow((prev) => !prev)}/> : (
             <div
               className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
               onClick={() => setShow((prev) => !prev)}
@@ -88,7 +88,7 @@ function Nav() {
           )}
         </div>
         <RxHamburgerMenu
-          className="lg:hidden w-[35px] h-[35px] fill-white cursor-pointer"
+          className="lg:hidden w-[35px] h-[35px] text-white cursor-pointer"
           onClick={() => setShowHam((prev) => !prev)}
         />
         <div
@@ -105,7 +105,7 @@ function Nav() {
           {!userData && (
             <IoPersonCircle className="w-[50px] h-[50px] fill-black cursor-pointer" />
           )}
-          {userData && (
+          {userData?.photoUrl ? <img src={userData?.photoUrl} className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer" /> : (
             <div
               className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
               onClick={() => setShow((prev) => !prev)}
